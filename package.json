@@ -10,11 +10,14 @@
 			}
 		],
 		"dependencies": {
-			"async": ">= 0.1.9 < 0.2.0"
+			"async": ">= 0.1.9 < 0.2.0",
+			"connect": ">=1.8.0"
 		},
 		"devDependencies": {
 			"mocha": "0.3.6",
-			"should": "0.5.0"
+			"should": "0.5.0",
+			"express": "> 2.1.0",
+			"fermata": "> 0.8"
 		},
 		"keywords": ["fileupload", "express"],
 		"repository": "git://github.com/domharrington/fileupload",
