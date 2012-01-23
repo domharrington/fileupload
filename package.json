@@ -1,0 +1,29 @@
+{
+	"name": "fileupload",
+		"description": "Route middleware for handling file uploads in Express",
+		"version": "0.0.1",
+		"author": "Dom Harrington <dom.harrington@clock.co.uk>",
+		"contributors": [
+			{
+				"name": "Dom Harrington",
+				"email": "dom.harrington@clock.co.uk"
+			}
+		],
+		"dependencies": {
+			"async": ">= 0.1.9 < 0.2.0"
+		},
+		"devDependencies": {
+			"mocha": "0.3.6",
+			"should": "0.5.0"
+		},
+		"keywords": ["fileupload", "express"],
+		"repository": "git://github.com/domharrington/fileupload",
+		"main": "index",
+		"scripts": {
+			"test": "mocha -r should -R List",
+			"prepublish" : "npm prune"
+		},
+		"engines": {
+			"node": ">= 0.4.6 < 0.7.0"
+		}
+}
