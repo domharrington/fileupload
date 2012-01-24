@@ -43,6 +43,12 @@ describe('fileupload', function() {
 			});
 		}
 
+		function postFields(fields, callback) {
+			fermata.json(url).post(fields, function(error, data) {
+				callback(data);
+			});
+		}
+
 		it('creates the upload dir if it doesnt exist', function(done) {
 
 			fs.stat(uploadDir, function(error, stats) {
@@ -98,6 +104,7 @@ describe('fileupload', function() {
 				]
 			}, function(data) {
 				Array.isArray(data.images).should.equal(true);
+				data.images.length.should.equal(2);
 				app.close();
 				done();
 			});
@@ -116,6 +123,16 @@ describe('fileupload', function() {
 					stats.isFile().should.equal(true);
 					done();
 				});
+			});
+		});
+
+		it('is tolerant of no files being uploaded', function(done) {
+			var field = {
+				hello: 'world'
+			};
+			postFields(field, function(data) {
+				data.should.eql(field);
+				done();
 			});
 		});
 
