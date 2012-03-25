@@ -7,14 +7,14 @@
     "Dom Harrington <dom.harrington@clock.co.uk>"
   ],
   "dependencies": {
-    "async": ">= 0.1.9 < 0.2.0"
+    "async": ">= 0.1.9 < 0.2.0",
+    "mime": ">=1.2.5"
   },
   "devDependencies": {
     "mocha": "0.3.6",
     "should": "0.5.0",
     "express": ">=2.5.6",
-    "fermata": "> 0.8",
-    "mime": ">1.2.5"
+    "fermata": "> 0.8"
   },
   "keywords": [
     "fileupload",
