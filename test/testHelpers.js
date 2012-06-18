@@ -54,12 +54,7 @@ module.exports = function(testOptions) {
       return remove;
     },
     defaultOptions: function(uploadDir) {
-      return {
-        type: 'file',
-        options: {
-          uploadDir: __dirname + uploadDir
-        }
-      };
+      return __dirname + uploadDir;
     },
     afterEach: function(uploadDir) {
       return function(done) {

@@ -42,7 +42,7 @@ describe('fileupload', function() {
         , image2 = fs.createReadStream(__dirname + '/files/' + image2Name)
         ;
 
-      uploadDir = options.options.uploadDir;
+      uploadDir = options;
 
       it('creates the upload dir if it doesnt exist', function(done) {
 
@@ -143,7 +143,7 @@ describe('fileupload', function() {
     describe('#put()', function() {
       var options = helpers.defaultOptions('/put-test')
         , filePath = __dirname + '/files/test1.gif'
-        , uploadDir = options.options.uploadDir
+        , uploadDir = options
         ;
 
       it('successfully puts a file when given a file path', function(done) {
@@ -208,7 +208,7 @@ describe('fileupload', function() {
     describe('#get()', function() {
       var options = helpers.defaultOptions('/get-test')
         , filePath = __dirname + '/files/test1.gif'
-        , uploadDir = options.options.uploadDir
+        , uploadDir = options
         , storedFile
         ;
 
@@ -255,7 +255,7 @@ describe('fileupload', function() {
     describe('#delete()', function() {
       var options = helpers.defaultOptions('/delete-test')
         , filePath = __dirname + '/files/test1.gif'
-        , uploadDir = options.options.uploadDir
+        , uploadDir = options
         , storedFile
         , storedFilePath
         ;
