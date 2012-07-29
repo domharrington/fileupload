@@ -7,8 +7,8 @@
     "Dom Harrington <dom.harrington@clock.co.uk>"
   ],
   "dependencies": {
-    "async": ">= 0.1.9 < 0.2.0",
-    "mime": ">=1.2.5"
+    "async": "~0.1.22",
+    "mime": "~1.2.7"
   },
   "devDependencies": {
     "mocha": "0.3.6",
