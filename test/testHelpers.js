@@ -6,7 +6,7 @@ var express = require('express')
 module.exports = function(testOptions) {
 
   function setup(options) {
-    var app = express.createServer()
+    var app = express()
       , fileuploadInstance = fileupload.createFileUpload(options)
       ;
 
@@ -29,8 +29,7 @@ module.exports = function(testOptions) {
         res.send(req.body);
       });
 
-      app.listen(testOptions.port);
-      return app;
+      return app.listen(testOptions.port);
     },
     setupGet: function(options) {
       var setupVariables = setup(options)

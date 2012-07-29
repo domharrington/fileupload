@@ -13,8 +13,8 @@
   "devDependencies": {
     "mocha": "0.3.6",
     "should": "0.5.0",
-    "express": ">=2.5.6",
     "fermata": "> 0.8"
+    "express": "3.0.0beta4",
   },
   "keywords": [
     "fileupload",
