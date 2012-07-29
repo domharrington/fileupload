@@ -1,5 +1,5 @@
 var fileupload = require('../index')
-  , should = require('should')
+  , assert = require('assert')
   , fs = require('fs')
   , express = require('express')
   , fermata = require('fermata')
@@ -47,13 +47,13 @@ describe('fileupload', function() {
       it('creates the upload dir if it doesnt exist', function(done) {
 
         fs.stat(uploadDir, function(error, stats) {
-          error.code.should.equal('ENOENT');
+          assert.equal(error.code, 'ENOENT');
 
           var app = helpers.setupMiddleware(options);
 
           setTimeout(function() {
             fs.stat(uploadDir, function(error, stats) {
-              stats.isDirectory().should.equal(true);
+              assert.equal(true, stats.isDirectory());
               fs.rmdirSync(uploadDir);
               app.close();
               done();
@@ -75,7 +75,7 @@ describe('fileupload', function() {
           fs.stat(path.join(uploadDir, data.image[0].path,
             data.image[0].basename), function(error, stats) {
 
-            stats.isFile().should.equal(true);
+            assert.equal(true, stats.isFile());
             app.close();
             done();
           });
@@ -95,8 +95,8 @@ describe('fileupload', function() {
             name: image2Name
           }
         }, function(data) {
-          data.image1[0].basename.should.equal(image1Name);
-          data.image2[0].basename.should.equal(image2Name);
+          assert.equal(image1Name, data.image1[0].basename);
+          assert.equal(image2Name, data.image2[0].basename);
           app.close();
           done();
         });
@@ -117,8 +117,8 @@ describe('fileupload', function() {
             }
           ]
         }, function(data) {
-          Array.isArray(data.images).should.equal(true);
-          data.images.length.should.equal(2);
+          assert.equal(Array.isArray(data.images), true);
+          assert.equal(data.images.length, 2);
           app.close();
           done();
         });
@@ -132,7 +132,7 @@ describe('fileupload', function() {
           ;
 
         postFields(field, function(data) {
-          data.should.eql(field);
+          assert.deepEqual(data, field);
           done();
         });
       });
@@ -150,10 +150,10 @@ describe('fileupload', function() {
         var put = helpers.setupPut(options);
 
         put(filePath, function(error, file) {
-          file.should.be.a('object');
+          assert.equal('object', typeof file);
           fs.stat(path.join(uploadDir, file.path,
             path.basename(filePath)), function(error, stats) {
-            stats.isFile().should.equal(true);
+            assert.equal(true, stats.isFile());
             done();
           });
         });
@@ -163,7 +163,7 @@ describe('fileupload', function() {
         var put = helpers.setupPut(options);
 
         put(filePath, function(error, file) {
-          file.type.should.equal(mime.lookup(filePath));
+          assert.equal(file.type, mime.lookup(filePath));
           done();
         });
       });
@@ -173,7 +173,7 @@ describe('fileupload', function() {
 
         put(filePath, function(error, file) {
           fs.stat(filePath, function(error, stats) {
-            file.size.should.equal(stats.size);
+            assert.equal(file.size, stats.size);
             done();
           });
         });
@@ -184,7 +184,7 @@ describe('fileupload', function() {
 
         put(filePath, function(error, file) {
           fs.stat(path.join(uploadDir, file.path, file.basename), function(error, stats) {
-            stats.isFile().should.equal(true);
+            assert.equal(true, stats.isFile());
             done();
           });
         });
@@ -195,9 +195,9 @@ describe('fileupload', function() {
         var put = helpers.setupPut(options);
 
         put('test-fake-file.gif', function(error, file) {
-          should.exist(error);
-          error.should.be.an.instanceof(Error);
-          error.code.should.equal('ENOENT');
+          assert.equal(false, error === null);
+          assert(error instanceof Error);
+          assert.equal('ENOENT', error.code);
           done();
         });
       });
@@ -224,7 +224,7 @@ describe('fileupload', function() {
       it('returns the file when passed a file object', function(done) {
         var get = helpers.setupGet(options);
         get(storedFile, function(error, file) {
-          file.should.be.an.instanceof(Buffer);
+          assert(file instanceof Buffer);
           done();
         });
       });
@@ -233,7 +233,7 @@ describe('fileupload', function() {
         var get = helpers.setupGet(options);
 
         get(path.join(storedFile.path, storedFile.basename), function(error, file) {
-          file.should.be.an.instanceof(Buffer);
+          assert(file instanceof Buffer);
           done();
         });
       });
@@ -242,9 +242,9 @@ describe('fileupload', function() {
         var get = helpers.setupGet(options);
 
         get('test-fake-file.gif', function(error, file) {
-          should.exist(error);
-          error.should.be.an.instanceof(Error);
-          error.code.should.equal('ENOENT');
+          assert.equal(false, error === null);
+          assert(error instanceof Error);
+          assert.equal('ENOENT', error.code);
           done();
         });
       });
@@ -276,7 +276,7 @@ describe('fileupload', function() {
 
         remove(storedFile, function(error) {
           fs.stat(storedFilePath, function(error, stats) {
-            error.code.should.equal('ENOENT');
+            assert.equal('ENOENT', error.code);
             done();
           });
         });
@@ -287,7 +287,7 @@ describe('fileupload', function() {
 
         remove(storedFilePath, function(error) {
           fs.stat(storedFilePath, function(error, stats) {
-            error.code.should.equal('ENOENT');
+            assert.equal('ENOENT', error.code);
             done();
           });
         });

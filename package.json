@@ -12,7 +12,6 @@
   },
   "devDependencies": {
     "mocha": "0.3.6",
-    "should": "0.5.0",
     "fermata": "> 0.8"
     "express": "3.0.0beta4",
   },
@@ -26,7 +25,7 @@
   },
   "main": "index",
   "scripts": {
-    "test": "mocha -r should -R List",
+    "test": "mocha -R List",
     "prepublish": "npm prune"
   },
   "engines": {
