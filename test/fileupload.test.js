@@ -6,6 +6,7 @@ var fileupload = require('../index')
   , port = 7778
   , path = require('path')
   , mime = require('mime')
+  , fileModule = require('../lib/modules/file')
   , helpers = require('./testHelpers')({
       port: port
     })
@@ -199,6 +200,19 @@ describe('fileupload', function() {
           assert(error instanceof Error);
           assert.equal('ENOENT', error.code);
           done();
+        });
+      });
+
+      it('stores the file in a folder named as an md5 hash of the file', function(done) {
+        var put = helpers.setupPut(options);
+
+        put(filePath, function(error, file) {
+          fileModule.getFileHash(filePath, function(error, hash) {
+            // Removing the trailing slash from the file path
+            file.path = file.path.slice(0, -1);
+            assert.equal(file.path, hash);
+            done();
+          });
         });
       });
 
