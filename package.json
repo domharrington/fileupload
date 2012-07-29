@@ -1,7 +1,7 @@
 {
   "name": "fileupload",
   "description": "Route middleware for handling file uploads in Express",
-  "version": "0.2.1",
+  "version": "0.2.2",
   "author": "Dom Harrington <dom.harrington@clock.co.uk>",
   "contributors": [
     "Dom Harrington <dom.harrington@clock.co.uk>"
