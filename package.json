@@ -12,7 +12,7 @@
   },
   "devDependencies": {
     "mocha": "0.3.6",
-    "fermata": "> 0.8"
+    "fermata": "> 0.8",
     "express": "3.0.0beta4",
   },
   "keywords": [
