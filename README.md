@@ -1,3 +1,4 @@
+[![build status](https://secure.travis-ci.org/domharrington/fileupload.png)](http://travis-ci.org/domharrington/fileupload)
 # fileupload
 
 This module's main aim is to make file uploads even easier in Node.JS. In it's simplest form, when instantiated, this module returns 4 functions:
