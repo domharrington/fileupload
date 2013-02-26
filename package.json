@@ -7,13 +7,14 @@
     "Dom Harrington <dom.harrington@clock.co.uk>"
   ],
   "dependencies": {
-    "async": "~0.1.22",
-    "mime": "~1.2.7"
+    "async": "~0.2",
+    "mime": "~1.2"
   },
   "devDependencies": {
-    "mocha": "0.3.6",
-    "fermata": "> 0.8",
-    "express": "3.0.0beta4"
+    "mocha": "~1.8",
+    "fermata": "~0.9",
+    "express": "~3.1",
+    "pliers": "~0.1"
   },
   "keywords": [
     "fileupload",
@@ -25,7 +26,7 @@
   },
   "main": "index",
   "scripts": {
-    "test": "mocha -R List",
+    "test": "node ./node_modules/pliers/pliers-cli.js qa",
     "prepublish": "npm prune"
   },
   "engines": {
