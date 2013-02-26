@@ -7,7 +7,7 @@ var fileupload = require('../index')
   , path = require('path')
   , mime = require('mime')
   , fileModule = require('../lib/modules/file')
-  , helpers = require('./testHelpers')({
+  , helpers = require('./test-helpers')({
       port: port
     })
   ;
