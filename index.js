@@ -5,4 +5,4 @@
  *
  * Wednesday 18th Jan 2012
  */
-module.exports = require('./lib/fileupload.js');
+module.exports = require('./lib/fileupload.js')

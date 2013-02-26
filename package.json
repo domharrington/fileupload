@@ -1,10 +1,10 @@
 {
   "name": "fileupload",
   "description": "Route middleware for handling file uploads in Express",
-  "version": "0.2.2",
-  "author": "Dom Harrington <dom.harrington@clock.co.uk>",
+  "version": "0.2.3",
+  "author": "Dom Harrington <dom@harrington-mail.com>",
   "contributors": [
-    "Dom Harrington <dom.harrington@clock.co.uk>"
+    "Dom Harrington <dom@harrington-mail.com>"
   ],
   "dependencies": {
     "async": "~0.2",

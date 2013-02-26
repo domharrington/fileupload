@@ -1,90 +1,84 @@
-var fileupload = require('../index')
-  , assert = require('assert')
+var assert = require('assert')
   , fs = require('fs')
-  , express = require('express')
   , fermata = require('fermata')
   , port = 7778
   , path = require('path')
   , mime = require('mime')
   , fileModule = require('../lib/modules/file')
-  , helpers = require('./test-helpers')({
-      port: port
-    })
-  ;
+  , helpers = require('./test-helpers')({ port: port })
 
-describe('fileupload', function() {
+describe('fileupload', function () {
 
-  describe('#createFileUpload()', function() {
+  describe('#createFileUpload()', function () {
 
-    var url = 'http://localhost:' + port;
+    var url = 'http://localhost:' + port
 
     function postFiles(files, callback) {
       fermata.json(url).post({
         'Content-Type': 'multipart/form-data'
       },
       files,
-      function(error, data) {
-        callback(data);
-      });
+      function (error, data) {
+        callback(data)
+      })
     }
 
     function postFields(fields, callback) {
-      fermata.json(url).post(fields, function(error, data) {
-        callback(data);
-      });
+      fermata.json(url).post(fields, function (error, data) {
+        callback(data)
+      })
     }
 
-    describe('middleware', function() {
+    describe('middleware', function () {
       var options = helpers.defaultOptions('/middleware-test')
         , uploadDir
         , image1Name = 'test1.gif'
         , image2Name = 'test2.gif'
         , image1 = fs.createReadStream(__dirname + '/files/' + image1Name)
         , image2 = fs.createReadStream(__dirname + '/files/' + image2Name)
-        ;
 
-      uploadDir = options;
+      uploadDir = options
 
-      it('creates the upload dir if it doesnt exist', function(done) {
+      it('creates the upload dir if it doesnt exist', function (done) {
 
-        fs.stat(uploadDir, function(error, stats) {
-          assert.equal(error.code, 'ENOENT');
+        fs.stat(uploadDir, function (error) {
+          assert.equal(error.code, 'ENOENT')
 
-          var app = helpers.setupMiddleware(options);
+          var app = helpers.setupMiddleware(options)
 
-          setTimeout(function() {
-            fs.stat(uploadDir, function(error, stats) {
-              assert.equal(true, stats.isDirectory());
-              fs.rmdirSync(uploadDir);
-              app.close();
-              done();
-            });
-          }, 30);
+          setTimeout(function () {
+            fs.stat(uploadDir, function (error, stats) {
+              assert.equal(true, stats.isDirectory())
+              fs.rmdirSync(uploadDir)
+              app.close()
+              done()
+            })
+          }, 30)
 
-        });
-      });
+        })
+      })
 
-      it('moves file to the correct location', function(done) {
-        var app = helpers.setupMiddleware(options);
+      it('moves file to the correct location', function (done) {
+        var app = helpers.setupMiddleware(options)
 
         postFiles({
           image: {
             data: image1,
             name: image1Name
           }
-        }, function(data) {
+        }, function (data) {
           fs.stat(path.join(uploadDir, data.image[0].path,
-            data.image[0].basename), function(error, stats) {
+            data.image[0].basename), function (error, stats) {
 
-            assert.equal(true, stats.isFile());
-            app.close();
-            done();
-          });
-        });
-      });
+            assert.equal(true, stats.isFile())
+            app.close()
+            done()
+          })
+        })
+      })
 
-      it('works for more than one file input in a form', function(done) {
-        var app = helpers.setupMiddleware(options);
+      it('works for more than one file input in a form', function (done) {
+        var app = helpers.setupMiddleware(options)
 
         postFiles({
           image1: {
@@ -95,16 +89,16 @@ describe('fileupload', function() {
             data: image2,
             name: image2Name
           }
-        }, function(data) {
-          assert.equal(image1Name, data.image1[0].basename);
-          assert.equal(image2Name, data.image2[0].basename);
-          app.close();
-          done();
-        });
-      });
+        }, function (data) {
+          assert.equal(image1Name, data.image1[0].basename)
+          assert.equal(image2Name, data.image2[0].basename)
+          app.close()
+          done()
+        })
+      })
 
-      it('works for arrays of files', function(done) {
-        var app = helpers.setupMiddleware(options);
+      it('works for arrays of files', function (done) {
+        var app = helpers.setupMiddleware(options)
 
         postFiles({
           images: [
@@ -117,198 +111,195 @@ describe('fileupload', function() {
               name: image2Name
             }
           ]
-        }, function(data) {
-          assert.equal(Array.isArray(data.images), true);
-          assert.equal(data.images.length, 2);
-          app.close();
-          done();
-        });
-      });
+        }, function (data) {
+          assert.equal(Array.isArray(data.images), true)
+          assert.equal(data.images.length, 2)
+          app.close()
+          done()
+        })
+      })
 
-      it('is tolerant of no files being uploaded', function(done) {
-        var app = helpers.setupMiddleware(options)
-          , field = {
-              hello: 'world'
-            }
-          ;
+      it('is tolerant of no files being uploaded', function (done) {
+        var field = { hello: 'world' }
 
-        postFields(field, function(data) {
-          assert.deepEqual(data, field);
-          done();
-        });
-      });
+        helpers.setupMiddleware(options)
 
-      afterEach(helpers.afterEach(uploadDir));
-    });
+        postFields(field, function (data) {
+          assert.deepEqual(data, field)
+          done()
+        })
+      })
 
-    describe('#put()', function() {
+      afterEach(helpers.afterEach(uploadDir))
+    })
+
+    describe('#put()', function () {
       var options = helpers.defaultOptions('/put-test')
         , filePath = __dirname + '/files/test1.gif'
         , uploadDir = options
-        ;
 
-      it('successfully puts a file when given a file path', function(done) {
-        var put = helpers.setupPut(options);
+      it('successfully puts a file when given a file path', function (done) {
+        var put = helpers.setupPut(options)
 
-        put(filePath, function(error, file) {
-          assert.equal('object', typeof file);
+        put(filePath, function (error, file) {
+          assert.equal('object', typeof file)
           fs.stat(path.join(uploadDir, file.path,
-            path.basename(filePath)), function(error, stats) {
-            assert.equal(true, stats.isFile());
-            done();
-          });
-        });
-      });
+            path.basename(filePath)), function (error, stats) {
+            assert.equal(true, stats.isFile())
+            done()
+          })
+        })
+      })
 
-      it('returns the correct file mime type', function(done) {
-        var put = helpers.setupPut(options);
+      it('returns the correct file mime type', function (done) {
+        var put = helpers.setupPut(options)
 
-        put(filePath, function(error, file) {
-          assert.equal(file.type, mime.lookup(filePath));
-          done();
-        });
-      });
+        put(filePath, function (error, file) {
+          assert.equal(file.type, mime.lookup(filePath))
+          done()
+        })
+      })
 
-      it('returns the correct file size', function(done) {
-        var put = helpers.setupPut(options);
+      it('returns the correct file size', function (done) {
+        var put = helpers.setupPut(options)
 
-        put(filePath, function(error, file) {
-          fs.stat(filePath, function(error, stats) {
-            assert.equal(file.size, stats.size);
-            done();
-          });
-        });
-      });
+        put(filePath, function (error, file) {
+          fs.stat(filePath, function (error, stats) {
+            assert.equal(file.size, stats.size)
+            done()
+          })
+        })
+      })
 
-      it('moves files to the correct location', function(done) {
-        var put = helpers.setupPut(options);
+      it('moves files to the correct location', function (done) {
+        var put = helpers.setupPut(options)
 
-        put(filePath, function(error, file) {
-          fs.stat(path.join(uploadDir, file.path, file.basename), function(error, stats) {
-            assert.equal(true, stats.isFile());
-            done();
-          });
-        });
+        put(filePath, function (error, file) {
+          fs.stat(path.join(uploadDir, file.path, file.basename), function (error, stats) {
+            assert.equal(true, stats.isFile())
+            done()
+          })
+        })
 
-      });
+      })
 
-      it('returns an error if file doesnt exist', function(done) {
-        var put = helpers.setupPut(options);
+      it('returns an error if file doesnt exist', function (done) {
+        var put = helpers.setupPut(options)
 
-        put('test-fake-file.gif', function(error, file) {
-          assert.equal(false, error === null);
-          assert(error instanceof Error);
-          assert.equal('ENOENT', error.code);
-          done();
-        });
-      });
+        put('test-fake-file.gif', function (error) {
+          assert.equal(false, error === null)
+          assert(error instanceof Error)
+          assert.equal('ENOENT', error.code)
+          done()
+        })
+      })
 
-      it('stores the file in a folder named as an md5 hash of the file', function(done) {
-        var put = helpers.setupPut(options);
+      it('stores the file in a folder named as an md5 hash of the file', function (done) {
+        var put = helpers.setupPut(options)
 
-        put(filePath, function(error, file) {
-          fileModule.getFileHash(filePath, function(error, hash) {
+        put(filePath, function (error, file) {
+          fileModule.getFileHash(filePath, function (error, hash) {
             // Removing the trailing slash from the file path
-            file.path = file.path.slice(0, -1);
-            assert.equal(file.path, hash);
-            done();
-          });
-        });
-      });
+            file.path = file.path.slice(0, -1)
+            assert.equal(file.path, hash)
+            done()
+          })
+        })
+      })
 
-      afterEach(helpers.afterEach(uploadDir));
-    });
+      afterEach(helpers.afterEach(uploadDir))
+    })
 
-    describe('#get()', function() {
+    describe('#get()', function () {
       var options = helpers.defaultOptions('/get-test')
         , filePath = __dirname + '/files/test1.gif'
         , uploadDir = options
         , storedFile
-        ;
 
-      before(function(done) {
-        var put = helpers.setupPut(options);
 
-        put(filePath, function(error, file) {
-          storedFile = file;
-          done();
-        });
-      });
+      before(function (done) {
+        var put = helpers.setupPut(options)
 
-      it('returns the file when passed a file object', function(done) {
-        var get = helpers.setupGet(options);
-        get(storedFile, function(error, file) {
-          assert(file instanceof Buffer);
-          done();
-        });
-      });
+        put(filePath, function (error, file) {
+          storedFile = file
+          done()
+        })
+      })
 
-      it('returns the file when passed a file path', function(done) {
-        var get = helpers.setupGet(options);
+      it('returns the file when passed a file object', function (done) {
+        var get = helpers.setupGet(options)
+        get(storedFile, function (error, file) {
+          assert(file instanceof Buffer)
+          done()
+        })
+      })
 
-        get(path.join(storedFile.path, storedFile.basename), function(error, file) {
-          assert(file instanceof Buffer);
-          done();
-        });
-      });
+      it('returns the file when passed a file path', function (done) {
+        var get = helpers.setupGet(options)
 
-      it('returns an error if file doesnt exist', function(done) {
-        var get = helpers.setupGet(options);
+        get(path.join(storedFile.path, storedFile.basename), function (error, file) {
+          assert(file instanceof Buffer)
+          done()
+        })
+      })
 
-        get('test-fake-file.gif', function(error, file) {
-          assert.equal(false, error === null);
-          assert(error instanceof Error);
-          assert.equal('ENOENT', error.code);
-          done();
-        });
-      });
+      it('returns an error if file doesnt exist', function (done) {
+        var get = helpers.setupGet(options)
 
-      after(helpers.afterEach(uploadDir));
-    });
+        get('test-fake-file.gif', function (error) {
+          assert.equal(false, error === null)
+          assert(error instanceof Error)
+          assert.equal('ENOENT', error.code)
+          done()
+        })
+      })
 
-    describe('#delete()', function() {
+      after(helpers.afterEach(uploadDir))
+    })
+
+    describe('#delete()', function () {
       var options = helpers.defaultOptions('/delete-test')
         , filePath = __dirname + '/files/test1.gif'
         , uploadDir = options
         , storedFile
         , storedFilePath
-        ;
 
-      before(function(done) {
-        var put = helpers.setupPut(options);
 
-        put(filePath, function(error, file) {
-          storedFile = file;
-          storedFilePath = path.join(storedFile.path, storedFile.basename);
+      before(function (done) {
+        var put = helpers.setupPut(options)
 
-          done();
-        });
-      });
+        put(filePath, function (error, file) {
+          storedFile = file
+          storedFilePath = path.join(storedFile.path, storedFile.basename)
 
-      it('deletes the file when passed a file object', function(done) {
-        var remove = helpers.setupDelete(options);
+          done()
+        })
+      })
 
-        remove(storedFile, function(error) {
-          fs.stat(storedFilePath, function(error, stats) {
-            assert.equal('ENOENT', error.code);
-            done();
-          });
-        });
-      });
+      it('deletes the file when passed a file object', function (done) {
+        var remove = helpers.setupDelete(options)
 
-      it('deletes the file when passed a file path', function(done) {
-        var remove = helpers.setupDelete(options);
+        remove(storedFile, function () {
+          fs.stat(storedFilePath, function (error) {
+            assert.equal('ENOENT', error.code)
+            done()
+          })
+        })
+      })
 
-        remove(storedFilePath, function(error) {
-          fs.stat(storedFilePath, function(error, stats) {
-            assert.equal('ENOENT', error.code);
-            done();
-          });
-        });
-      });
+      it('deletes the file when passed a file path', function (done) {
+        var remove = helpers.setupDelete(options)
 
-      after(helpers.afterEach(uploadDir));
-    });
+        remove(storedFilePath, function () {
+          fs.stat(storedFilePath, function (error) {
+            assert.equal('ENOENT', error.code)
+            done()
+          })
+        })
+      })
 
-  });
-});
+      after(helpers.afterEach(uploadDir))
+    })
+
+  })
+})

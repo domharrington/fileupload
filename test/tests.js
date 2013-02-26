@@ -10,7 +10,7 @@ var mocha = new Mocha()
     , fail: 0
     }
 
-mocha.reporter('spec').ui('bdd');
+mocha.reporter('spec').ui('bdd')
 
 mocha.addFile(join(__dirname, 'fileupload.test.js'))
 

@@ -24,46 +24,46 @@ File uploads have been built in to Connect since 1.8, but they dont come in to t
 
 This piece of route middleware moves the files to the upload directory specified in the constructor and adds the files to req.body as if they were normal form fields.
 
-     var fileupload = require('fileupload').createFileUpload('/uploadDir').middleware;
+     var fileupload = require('fileupload').createFileUpload('/uploadDir').middleware
 
      app.post('/upload', fileupload, function(req, res) {
        // files are now in the req.body object along with other form fields
        // files also get moved to the uploadDir specified
-     });
+     })
 
 ###get()
 
 Retrieves a file from the upload directory.
 
 
-     var fileupload = require('fileupload').createFileUpload('/uploadDir');
+     var fileupload = require('fileupload').createFileUpload('/uploadDir')
 
      fileupload.get('path-to-uploaded-file.gif', function(error, data) {
        // data is the contents of the file
-     });
+     })
 
 ###put()
 
 Puts a file to the upload directory.
 
 
-     var fileupload = require('fileupload').createFileUpload('/uploadDir');
+     var fileupload = require('fileupload').createFileUpload('/uploadDir')
 
      fileupload.put('path-to-file.gif', function(error, file) {
        // file is an object with information about the uploaded file
        // See below for the contents of this object
-     });
+     })
 
 ###delete()
 
 Deletes a file from the upload directory.
 
 
-     var fileupload = require('fileupload').createFileUpload('/uploadDir');
+     var fileupload = require('fileupload').createFileUpload('/uploadDir')
 
      fileupload.delete('path-to-file.gif', function(error) {
 
-     });
+     })
 
 ###File object
 The file objects that are returned from the middleware and put actions contain the following fields:
