@@ -34,6 +34,12 @@ module.exports = function (testOptions) {
 
       return get
     },
+    setupGetAsReadStream: function (options) {
+      var setupVariables = setup(options)
+        , getAsReadStream = setupVariables.fileupload.getAsReadStream
+
+      return getAsReadStream
+    },
     setupPut: function (options) {
       var setupVariables = setup(options)
         , put = setupVariables.fileupload.put

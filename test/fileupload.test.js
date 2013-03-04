@@ -6,6 +6,7 @@ var assert = require('assert')
   , mime = require('mime')
   , fileModule = require('../lib/modules/file')
   , helpers = require('./test-helpers')({ port: port })
+  , temp = require('temp')
 
 describe('fileupload', function () {
 
@@ -212,7 +213,8 @@ describe('fileupload', function () {
 
     describe('#get()', function () {
       var options = helpers.defaultOptions('/get-test')
-        , filePath = __dirname + '/files/test1.gif'
+        , fileName = '/files/test1.gif'
+        , filePath = __dirname + fileName
         , uploadDir = options
         , storedFile
 
@@ -243,7 +245,7 @@ describe('fileupload', function () {
         })
       })
 
-      it('returns an error if file doesnt exist', function (done) {
+      it('returns an error if file does not exist', function (done) {
         var get = helpers.setupGet(options)
 
         get('test-fake-file.gif', function (error) {
@@ -251,6 +253,21 @@ describe('fileupload', function () {
           assert(error instanceof Error)
           assert.equal('ENOENT', error.code)
           done()
+        })
+      })
+
+      describe('Streams', function () {
+        it('writes file data to a stream', function (done) {
+          var getAsReadStream = helpers.setupGetAsReadStream(options)
+            , writeStream = temp.createWriteStream()
+            , readStream = getAsReadStream(storedFile)
+
+          writeStream.on('close', function (err) {
+            assert(typeof err === 'undefined')
+            done()
+          })
+
+          readStream.pipe(writeStream)
         })
       })
 
