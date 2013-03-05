@@ -267,6 +267,8 @@ describe('fileupload', function () {
             done()
           })
 
+          assert(readStream instanceof fs.ReadStream)
+
           readStream.pipe(writeStream)
         })
       })
