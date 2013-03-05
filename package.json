@@ -16,7 +16,8 @@
     "fermata": "~0.9",
     "express": "~3.1",
     "pliers": "~0.1",
-    "should": "~1.2"
+    "should": "~1.2",
+    "temp": "~0.5.0"
   },
   "keywords": [
     "fileupload",
