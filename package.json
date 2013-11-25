@@ -6,6 +6,9 @@
   "contributors": [
     "Dom Harrington <dom@harrington-mail.com>"
   ],
+  "publishConfig": {
+    "registry": "http://registry.npmjs.org"
+  },
   "dependencies": {
     "async": "~0.2",
     "mime": "~1.2",
