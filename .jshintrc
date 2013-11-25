@@ -24,7 +24,6 @@
 , "nonew": true
 , "predef":
   [ "Backbone"
-  , "_"
   , "describe"
   , "it"
   , "before"
