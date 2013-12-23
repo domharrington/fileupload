@@ -10,6 +10,8 @@ This module's main aim is to make file uploads even easier in Node.JS. In it's s
 
 Currently only supporting file based uploads, in the near future will support GridFS (mongo db data store), S3 (amazon simple storage services) and SFTP.
 
+This module removes the uploaded files after successful upload.
+
 ## Installation
 
      npm install fileupload

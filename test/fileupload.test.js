@@ -131,6 +131,28 @@ describe('fileupload', function () {
         })
       })
 
+      it('should tidy up the tmp dir of files', function (done) {
+        var app = helpers.setupMiddleware(options)
+          , numberOfFilesInTmp = fs.readdirSync('/tmp').length
+
+        postFiles({
+          images: [
+            {
+              data: image1,
+              name: image1Name
+            },
+            {
+              data: image2,
+              name: image2Name
+            }
+          ]
+        }, function () {
+          app.close()
+          assert.equal(fs.readdirSync('/tmp').length, numberOfFilesInTmp)
+          done()
+        })
+      })
+
       afterEach(helpers.afterEach(uploadDir))
     })
 
