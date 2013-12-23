@@ -1,8 +1,6 @@
 var Mocha = require('mocha')
   , join = require('path').join
 
-require('should')
-
 var mocha = new Mocha()
   , counts =
     { total: 0
