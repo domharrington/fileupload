@@ -19,7 +19,9 @@
     "fermata": "~0.9",
     "express": "~3.1",
     "pliers": "~0.1",
-    "temp": "~0.5.0"
+    "temp": "~0.5.0",
+    "jshint": "~2.3.0",
+    "istanbul": "~0.2.1"
   },
   "keywords": [
     "fileupload",
@@ -31,8 +33,11 @@
   },
   "main": "index",
   "scripts": {
-    "test": "node ./node_modules/pliers/pliers-cli.js qa",
-    "prepublish": "npm prune"
+    "lint": "./node_modules/.bin/jshint .",
+    "pretest": "npm run-script lint",
+    "test": "./node_modules/.bin/istanbul cover ./node_modules/.bin/_mocha test/*test.js",
+    "posttest": "./node_modules/.bin/istanbul check-coverage && rm -rf coverage",
+    "prepublish": "npm test && npm prune"
   },
   "engines": {
     "node": ">= 0.4.6 < 0.10.22"
