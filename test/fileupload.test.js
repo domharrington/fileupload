@@ -122,11 +122,11 @@ describe('fileupload', function () {
 
       it('is tolerant of no files being uploaded', function (done) {
         var field = { hello: 'world' }
-
-        helpers.setupMiddleware(options)
+          , app = helpers.setupMiddleware(options)
 
         postFields(field, function (data) {
           assert.deepEqual(data, field)
+          app.close()
           done()
         })
       })
