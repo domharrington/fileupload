@@ -1,3 +1,5 @@
+### *DEPRECATION: If you need a file upload middleware, I would recommend using [multer](https://www.npmjs.com/package/multer) or [busboy](https://www.npmjs.com/package/busboy).*
+
 [![build status](https://secure.travis-ci.org/domharrington/fileupload.png)](http://travis-ci.org/domharrington/fileupload)
 # fileupload
 
