@@ -35,7 +35,7 @@ This piece of route middleware moves the files to the upload directory specified
        // files also get moved to the uploadDir specified
      })
 
-###get()
+### get()
 
 Retrieves a file from the upload directory.
 
@@ -46,7 +46,7 @@ Retrieves a file from the upload directory.
        // data is the contents of the file
      })
 
-###put()
+### put()
 
 Puts a file to the upload directory.
 
@@ -58,7 +58,7 @@ Puts a file to the upload directory.
        // See below for the contents of this object
      })
 
-###delete()
+### delete()
 
 Deletes a file from the upload directory.
 
@@ -69,7 +69,7 @@ Deletes a file from the upload directory.
 
      })
 
-###File object
+### File object
 The file objects that are returned from the middleware and put actions contain the following fields:
 
 - size - size of the file
